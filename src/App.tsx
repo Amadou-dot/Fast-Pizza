@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Home /> },
       { path: '/menu', element: <Menu />, loader: menuLoader, errorElement: <Error /> },
-      { path: '/cart', element: <Cart /> },
+      { path: '/cart', element: <Cart/> },
       { path: '/order/new', element: <CreateOrder />, action: CreateOrderAction },
       { path: '/order/:orderId', element: <Order />, loader: orderLoader, errorElement: <Error /> },
     ],
