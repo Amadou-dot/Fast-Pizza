@@ -1,12 +1,7 @@
 import Button from '../../ui/Button'
 import { formatCurrency } from '../../utils/helpers'
-interface CartItemProps {
-  pizzaId: number,
-  name: string,
-  quantity: number,
-  unitPrice: number,
-  totalPrice: number,
-}
+import { CartItem as CartItemProps } from '../../utils/interfaces'
+
 function CartItem({ item } : { item: CartItemProps }) {
   const { pizzaId, name, quantity, totalPrice } = item
 

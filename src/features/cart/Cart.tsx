@@ -1,36 +1,17 @@
 import ButtonLink from '../../ui/ButtonLink'
 import Button from '../../ui/Button'
 import CartItem from './CartItem'
-import { useSelector } from 'react-redux'
-
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: 'Mediterranean',
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: 'Vegetale',
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: 'Spinach and Mushroom',
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-]
+import { useDispatch, useSelector } from 'react-redux'
+import { cartState, userState } from '../../utils/interfaces'
+import { clearCart } from './CartSlice'
 
 function Cart() {
-  const name = useSelector(state => state.user.username)
-  const cart = fakeCart
-
+  const name = useSelector((state: userState) => state.user.username)
+  const cart = useSelector((state: cartState) => state.cart.cart)
+  const dispatch = useDispatch()
+  const handleClearCart = () => {
+    dispatch(clearCart())
+  }
   return (
     <div className='flex flex-col gap-4 px-4 py-3'>
       <ButtonLink to='/menu'>&larr; Back to menu</ButtonLink>
@@ -43,7 +24,9 @@ function Cart() {
       </ul>
       <div className='mt-6 space-x-2'>
         <Button to='/order/new'>Place order</Button>
-        <Button type='secondary'>Clear cart</Button>
+        <Button type='secondary' onclick={handleClearCart}>
+          Clear cart
+        </Button>
       </div>
     </div>
   )

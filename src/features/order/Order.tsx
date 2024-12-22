@@ -1,6 +1,6 @@
 // Test ID: IIDSAT
 
-import { useLoaderData } from 'react-router-dom'
+import { LoaderFunction, LoaderFunctionArgs, useLoaderData } from 'react-router-dom'
 import { getOrder } from '../../apiRestaurant'
 import {
   calcMinutesLeft,
@@ -8,6 +8,7 @@ import {
   formatDate,
 } from '../../utils/helpers'
 import OrderItem from './OrderItem'
+import { CartItem } from '../../utils/interfaces'
 
 function Order() {
   const order = useLoaderData()
@@ -52,16 +53,16 @@ function Order() {
       </div>
 
       <ul className='divide-y divide-stone-300 border-b border-t border-stone-300'>
-        {cart.map((item) => (
+        {cart.map((item: CartItem) => (
           <OrderItem
-            key={item.id}
+            key={item.pizzaId}
             item={item}
             isLoadingIngredients={undefined}
             ingredients={undefined}
           />
         ))}
       </ul>
-      
+
       <div className='space-y-2 bg-stone-300 px-6 py-5'>
         <p className='text-sm font-medium text-stone-500'>
           Price pizza: {formatCurrency(orderPrice)}
@@ -78,5 +79,9 @@ function Order() {
     </div>
   )
 }
-export const loader = async ({ params }) => await getOrder(params.orderId)
+export const loader: LoaderFunction = async ({ params }: LoaderFunctionArgs) => {
+
+  const { orderId } = params as { orderId: string };
+  return await getOrder(orderId)
+}
 export default Order

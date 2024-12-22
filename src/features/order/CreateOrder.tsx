@@ -9,6 +9,7 @@ import { createOrder } from '../../apiRestaurant'
 import { useState } from 'react'
 import Button from '../../ui/Button'
 import { useSelector } from 'react-redux'
+import { cartState, userState } from '../../utils/interfaces'
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
@@ -16,36 +17,12 @@ const isValidPhone = (str: string) =>
     str,
   )
 
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: 'Mediterranean',
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: 'Vegetale',
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: 'Spinach and Mushroom',
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-]
-
 function CreateOrder() {
   const formErrors = useActionData()
   const isSubmitting = useNavigation().state === 'submitting'
   const [withPriority, setWithPriority] = useState(false)
-  const cart = fakeCart
-  const name = useSelector(state => state.user.username)
+  const cart = useSelector((state: cartState) => state.cart.cart)
+  const name = useSelector((state: userState) => state.user.username)
   return (
     <div className='px-4 py-6'>
       <h2 className='mb-8 text-xl font-semibold'>Ready to order?</h2>
@@ -138,9 +115,9 @@ export const action: ActionFunction = async ({
   if (Object.keys(errors).length > 0) return errors
 
   // if no errors, create the order and redirect to the order page
-  // const newOrder = await createOrder(order);
+  const newOrder = await createOrder(order);
 
-  // return redirect(`/order/${newOrder.id}`);
-  return null
+  return redirect(`/order/${newOrder.id}`);
+  // return null
 }
 export default CreateOrder
