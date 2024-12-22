@@ -8,6 +8,7 @@ import {
 import { createOrder } from '../../apiRestaurant'
 import { useState } from 'react'
 import Button from '../../ui/Button'
+import { useSelector } from 'react-redux'
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
@@ -44,7 +45,7 @@ function CreateOrder() {
   const isSubmitting = useNavigation().state === 'submitting'
   const [withPriority, setWithPriority] = useState(false)
   const cart = fakeCart
-
+  const name = useSelector(state => state.user.username)
   return (
     <div className='px-4 py-6'>
       <h2 className='mb-8 text-xl font-semibold'>Ready to order?</h2>
@@ -53,6 +54,7 @@ function CreateOrder() {
         <div className='mb-5 flex flex-col gap-2 sm:flex-row sm:items-center'>
           <label className='sm:basis-40'>First Name</label>
           <input
+          defaultValue={name}
             type='text'
             name='customer'
             required
