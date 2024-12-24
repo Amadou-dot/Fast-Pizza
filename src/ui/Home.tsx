@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
-import CreateUser from '../features/user/CreateUser';
-import Button from './Button';
-import { userState } from '../utils/interfaces';
+import { useSelector } from 'react-redux'
+import CreateUser from '../features/user/CreateUser'
+import Button from './Button'
+import { userState } from '../utils/interfaces'
 
 function Home() {
-  const name = useSelector((state:userState) => state.user.username);
+  const name = useSelector((state: userState) => state.user.username)
   return (
     <div className='my-10 px-4 text-center sm:my-16'>
       <h1 className='mb-8 text-xl font-semibold md:text-3xl'>
@@ -17,7 +17,7 @@ function Home() {
       {!name && <CreateUser />}
       {name && <Button to='/menu'>Start ordering</Button>}
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home
