@@ -1,3 +1,4 @@
+import { ActionFunctionArgs } from 'react-router-dom'
 import { useFetcher } from 'react-router-dom'
 import Button from '../../ui/Button'
 import { Order } from '../../utils/interfaces'
@@ -14,8 +15,10 @@ export default function UpdateOrder({ order }: { order: Order }) {
   )
 }
 
-export async function action({ params }: { params: { orderId: string } }) {
+export async function action({ params }: ActionFunctionArgs) {
   const data = { priority: true }
-  await updateOrder(params.orderId, data)
+
+  await updateOrder(params.orderId!, data)
+
   return null
 }
