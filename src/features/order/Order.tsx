@@ -15,6 +15,7 @@ import {
 import OrderItem from './OrderItem'
 import { CartItem, Pizza } from '../../utils/interfaces'
 import { useEffect } from 'react'
+import UpdateOrder from './UpdateOrder'
 
 function Order() {
   const fetcher = useFetcher()
@@ -23,7 +24,6 @@ function Order() {
     if (!fetcher.data && fetcher.state === 'idle') fetcher.load('/menu')
   })
 
-  console.log(fetcher.data)
   const order = useLoaderData()
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address
   const {
@@ -92,6 +92,7 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder order={order} />}
     </div>
   )
 }

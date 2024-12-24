@@ -28,3 +28,13 @@ export type userState = {
     error: string | undefined
   }
 }
+
+export interface Order {
+  id:number,
+  status: 'idle' | 'loading' | 'submitting',
+  priority: boolean,
+  priorityPrice: number,
+  orderPrice: number,
+  estimatedDelivery: string,
+  cart: CartItem[],
+}
