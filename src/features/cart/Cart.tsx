@@ -22,8 +22,8 @@ function Cart() {
           <h2 className='mt-7 text-xl font-semibold capitalize'>{`${name ? `${name}'s cart` : 'your cart'}`}</h2>
           <ul className='mt-3 divide-y divide-stone-300 border-b border-stone-300'>
             {cart
-              .filter((item) => item.quantity !== 0)
-              .map((item) => (
+              .filter(item => item.quantity !== 0)
+              .map(item => (
                 <CartItem key={item.pizzaId} item={item} />
               ))}
           </ul>

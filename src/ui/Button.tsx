@@ -11,7 +11,7 @@ export default function Button({
   children: React.ReactNode
   disabled?: boolean
   to?: string
-  onclick?: () => void
+  onclick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   type?: 'primary' | 'secondary' | 'small' | 'round'
 }) {
   const base =

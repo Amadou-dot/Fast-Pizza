@@ -1,6 +1,15 @@
 import { formatCurrency } from '../../utils/helpers'
+import { CartItem } from '../../utils/interfaces'
 
-function OrderItem({ item, isLoadingIngredients, ingredients }) {
+function OrderItem({
+  item,
+  isLoadingIngredients,
+  ingredients,
+}: {
+  item: CartItem
+  isLoadingIngredients: boolean
+  ingredients: string[]
+}) {
   const { quantity, name, totalPrice } = item
 
   return (
@@ -11,6 +20,9 @@ function OrderItem({ item, isLoadingIngredients, ingredients }) {
         </p>
         <p className='font-bold'>{formatCurrency(totalPrice)}</p>
       </div>
+      <p className='text-sm capitalize italic text-stone-500'>
+        {!isLoadingIngredients && ingredients?.join(', ')}
+      </p>
     </li>
   )
 }

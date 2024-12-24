@@ -15,11 +15,11 @@ const cartSlice = createSlice({
 
     removePizza(state, action: { payload: { pizzaId: number } }) {
       const { pizzaId } = action.payload
-      state.cart = state.cart.filter((pizza) => pizza.pizzaId !== pizzaId)
+      state.cart = state.cart.filter(pizza => pizza.pizzaId !== pizzaId)
     },
     increaseItemQuantity(state, action: { payload: { pizzaId: number } }) {
       const { pizzaId } = action.payload
-      const pizza = state.cart.find((pizza) => pizza.pizzaId === pizzaId)
+      const pizza = state.cart.find(pizza => pizza.pizzaId === pizzaId)
       if (pizza && pizza.quantity >= 0) {
         pizza.quantity++
         pizza.totalPrice = pizza.quantity * pizza.unitPrice
@@ -27,7 +27,7 @@ const cartSlice = createSlice({
     },
     decreaseItemQuantity(state, action: { payload: { pizzaId: number } }) {
       const { pizzaId } = action.payload
-      const pizza = state.cart.find((pizza) => pizza.pizzaId === pizzaId)
+      const pizza = state.cart.find(pizza => pizza.pizzaId === pizzaId)
       if (pizza && pizza.quantity > 0) {
         pizza.quantity--
         pizza.totalPrice = pizza.quantity * pizza.unitPrice
@@ -59,6 +59,6 @@ export const getCartQuantity = (cart: CartItem[]) =>
   cart.reduce((acc: number, item: CartItem) => acc + item.quantity, 0)
 
 export const isItemInCart = (cart: CartItem[], pizzaId: number) => {
-  const item = cart.find((item) => item.pizzaId === pizzaId)?.quantity
+  const item = cart.find(item => item.pizzaId === pizzaId)?.quantity
   return item == undefined ? false : item > 0 ? true : false
 }

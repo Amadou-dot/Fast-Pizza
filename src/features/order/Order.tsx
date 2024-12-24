@@ -1,18 +1,31 @@
 // Test ID: IIDSAT
 
-import { LoaderFunction, LoaderFunctionArgs, useLoaderData } from 'react-router-dom'
-import { getOrder } from '../../apiRestaurant'
+import {
+  LoaderFunction,
+  LoaderFunctionArgs,
+  useFetcher,
+  useLoaderData,
+} from 'react-router-dom'
+import { getOrder } from '../../services/apiRestaurant'
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
 } from '../../utils/helpers'
 import OrderItem from './OrderItem'
-import { CartItem } from '../../utils/interfaces'
+import { CartItem, Pizza } from '../../utils/interfaces'
+import { useEffect } from 'react'
 
 function Order() {
+  const fetcher = useFetcher()
+
+  useEffect(() => {
+    if (!fetcher.data && fetcher.state === 'idle') fetcher.load('/menu')
+  })
+
+  console.log(fetcher.data)
   const order = useLoaderData()
-  // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
+  // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address
   const {
     id,
     status,
@@ -57,8 +70,11 @@ function Order() {
           <OrderItem
             key={item.pizzaId}
             item={item}
-            isLoadingIngredients={undefined}
-            ingredients={undefined}
+            isLoadingIngredients={fetcher.state === 'loading'}
+            ingredients={
+              fetcher.data?.find((el: Pizza) => el.id === item.pizzaId)
+                ?.ingredients
+            }
           />
         ))}
       </ul>
@@ -79,9 +95,10 @@ function Order() {
     </div>
   )
 }
-export const loader: LoaderFunction = async ({ params }: LoaderFunctionArgs) => {
-
-  const { orderId } = params as { orderId: string };
+export const loader: LoaderFunction = async ({
+  params,
+}: LoaderFunctionArgs) => {
+  const { orderId } = params as { orderId: string }
   return await getOrder(orderId)
 }
 export default Order
