@@ -10,21 +10,12 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addPizza(state, action: { payload: CartItem }) {
-      // Check if the pizza is already in the cart
-      const pizza = state.cart.find(
-        (pizza) => pizza.pizzaId === action.payload.pizzaId,
-      )
-      if (pizza) {
-        // If it is, increase the quantity
-        increaseItemQuantity({ pizzaId: action.payload.pizzaId })
-        return
-      }
       state.cart.push(action.payload)
     },
-    removePizza(state, action: { payload: number }) {
-      state.cart = state.cart.filter(
-        (pizza) => pizza.pizzaId !== action.payload,
-      )
+
+    removePizza(state, action: { payload: { pizzaId: number } }) {
+      const { pizzaId } = action.payload
+      state.cart = state.cart.filter((pizza) => pizza.pizzaId !== pizzaId)
     },
     increaseItemQuantity(state, action: { payload: { pizzaId: number } }) {
       const { pizzaId } = action.payload
@@ -42,7 +33,7 @@ const cartSlice = createSlice({
         pizza.totalPrice = pizza.quantity * pizza.unitPrice
       }
       if (pizza && pizza.quantity === 0) {
-        removePizza(pizzaId)
+        cartSlice.caseReducers.removePizza(state, action)
         return
       }
     },

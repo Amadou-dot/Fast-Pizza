@@ -4,6 +4,7 @@ import { formatCurrency } from '../../utils/helpers'
 import { cartState, Pizza } from '../../utils/interfaces'
 import { addPizza, increaseItemQuantity, isItemInCart } from '../cart/CartSlice'
 import DeleteItem from '../cart/DeleteItem'
+import UpdateItemQuantity from '../cart/UpdateItemQuantity'
 
 function MenuItem({ pizza }: { pizza: Pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza
@@ -40,12 +41,22 @@ function MenuItem({ pizza }: { pizza: Pizza }) {
           ) : (
             <p className='font-medium uppercase text-stone-500'>Sold out</p>
           )}
-          {isItemInCart(cart, id) && <DeleteItem id={id} />}
-          {!soldOut && (
-            <Button type='small' onclick={handleAddToCart}>
-              Add to cart
-            </Button>
-          )}
+          <div className='flex gap-3 sm:gap-8'>
+            {isItemInCart(cart, id) ? (
+              <>
+                <UpdateItemQuantity id={id} />
+                <DeleteItem id={id} />
+              </>
+            ) : (
+              (!soldOut && (
+                <Button type='small' onclick={handleAddToCart}>
+                  Add to cart
+                </Button>
+              )) ||
+              null
+            )}
+            {}
+          </div>
         </div>
       </div>
     </li>
