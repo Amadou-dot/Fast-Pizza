@@ -4,6 +4,6 @@
   base = "fastPizza"
 
 [[redirects]]
-  from = "/fastPizza/*"
-  to = "/fastPizza/index.html"
+  from = "/*"
+  to = "/index.html"
   status = 200
