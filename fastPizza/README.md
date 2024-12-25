@@ -16,7 +16,7 @@ Welcome to the Fast React Pizza Co. project! This is a web application for order
 
 ```sh
 git clone https://github.com/Amadou-dot/Fast-Pizza.git
-cd fast-react-pizza-co
+cd Fast-Pizza/fastPizza
 ```
 
 2. Install the dependencies:
